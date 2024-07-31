@@ -1,0 +1,29 @@
+---
+title: 'Quickstart'
+description: 'Welcome! Follow the steps below to get started with Subtrace.'
+---
+
+1. Go to [subtrace.dev/dashboard](https://subtrace.dev/dashboard) and log in with your single sign-on (SSO) identity provider.
+
+2. Press **Get API token** from the top right corner to generate an API token.
+
+3. Start a worker node with Docker (remember to set `SUBTRACE_TOKEN` from the previous step):
+
+```bash
+$ docker run -it --rm SUBTRACE_TOKEN=<token> -v subtrace:/var/lib/clickhouse subtrace.dev/worker:latest
+```
+
+4. Install the `subtrace` binary in the same machine where your backend lives:
+
+```bash
+$ <TODO>
+```
+
+5. Start your backend under Subtrace:
+
+```bash
+$ subtrace run -- python -m http.server
+```
+
+Congratulations! Your app is now running under Subtrace. Send a test HTTP
+request to your backend and see it appear in the Subtrace dashboard.
