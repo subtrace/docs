@@ -25,6 +25,11 @@
   ],
   "anchors": [
     {
+      "name": "Dashboard",
+      "icon": "table",
+      "url": "https://subtrace.dev/dashboard"
+    },
+    {
       "name": "Documentation",
       "icon": "book-open-cover",
       "url": "https://docs.subtrace.dev"
