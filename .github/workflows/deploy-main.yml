@@ -1,0 +1,25 @@
+name: deploy-main
+
+on:
+  push:
+    branches: [ "main" ]
+
+jobs:
+  deploy-main:
+    name: deploy-main
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: deploy
+      run: |
+        id=$(curl -s -X POST -H "Authorization: Bearer ${{ secrets.MINTLIFY_TOKEN }}" "https://api.mintlify.com/v1/project/update/66aab01f638881ee8eec5634" | jq -r .statusId)
+        echo "$(date --rfc-3339=seconds): deployment=${id}"
+        for i in $(seq 1 20); do
+          status=$(curl -s -H "Authorization: Bearer ${{ secrets.MINTLIFY_TOKEN }}" "https://api.mintlify.com/v1/project/update-status/${id}" | jq -r '.status')
+          echo "$(date --rfc-3339=seconds): status=${status}"
+          if [[ "${status}" == "success" ]]; then
+            break
+          else
+            sleep 5
+          fi
+        done
