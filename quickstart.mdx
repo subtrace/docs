@@ -10,7 +10,7 @@ description: 'Welcome! Follow the steps below to get started with Subtrace.'
 3. Start a worker node with Docker (remember to set `SUBTRACE_TOKEN` to the token you generated):
 
 ```bash
-$ docker run -it --rm SUBTRACE_TOKEN=subt_RfcaSHI8lWmtVEfDcv96QLEVzJceuPKJDCf6Wy6amaG -v subtrace:/var/lib/clickhouse subtrace.dev/worker:latest
+$ docker run -it --rm SUBTRACE_TOKEN=subt_...12345 -v subtrace:/var/lib/clickhouse subtrace.dev/worker:latest
 ```
 
 4. Install the `subtrace` binary in the same machine where your backend lives:
