@@ -11,15 +11,15 @@ description: 'Welcome! Follow the steps below to get started with Subtrace.'
 
 ```bash
 docker run -it --rm \
-  SUBTRACE_TOKEN=subt_...12345 \
+  -e SUBTRACE_TOKEN=subt_...12345 \
   -v subtrace:/var/lib/clickhouse \
   subtrace.dev/worker:latest
 ```
 
-4. Install the `subtrace` binary in the same machine where your backend lives:
+4. Install Subtrace using the following command:
 
 ```bash
-<TODO>
+curl -fsSL https://subtrace.dev/install.sh | sh
 ```
 
 5. Start your backend under Subtrace:
