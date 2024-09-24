@@ -3,30 +3,25 @@ title: 'Quickstart'
 description: 'Welcome! Follow the steps below to get started with Subtrace.'
 ---
 
-1. Go to [subtrace.dev/dashboard](https://subtrace.dev/dashboard) and log in with your single sign-on (SSO) identity provider.
+1. Go to [subtrace.dev/dashboard/tokens](https://subtrace.dev/dashboard/tokens) and log in with your single sign-on (SSO) identity provider.
 
-2. Click **Get API token** on the top right corner to generate a Subtrace API token.
+2. Click **Create API token** to generate a Subtrace API token for your namespace.
 
-3. Start a worker node with Docker (remember to set `SUBTRACE_TOKEN` to the token you generated):
+3. Start a worker node with Docker. This is where your tracing data will live. Don't forget to set the `SUBTRACE_TOKEN` environment variable.
 
 ```bash
-docker run -it --rm \
-  -e SUBTRACE_TOKEN=subt_...12345 \
-  -v subtrace:/var/lib/clickhouse \
-  subtrace.dev/worker:latest
+export SUBTRACE_TOKEN=
+docker pull subtrace.dev/worker:latest
+docker run -it --rm -e SUBTRACE_TOKEN=$SUBTRACE_TOKEN -v worker:/var/lib/clickhouse subtrace.dev/worker:latest
 ```
 
-4. Install Subtrace using the following command:
+4. Install Subtrace and start your app under Subtrace to automatically trace requests. Once again, don't forget to set the `SUBTRACE_TOKEN` environment variable.
 
 ```bash
+export SUBTRACE_TOKEN=
 curl -fsSL https://subtrace.dev/install.sh | sh
+subtrace run -log -- node ./server.js
 ```
 
-5. Start your backend under Subtrace:
-
-```bash
-subtrace run -- python -m http.server
-```
-
-Congratulations! Your app is now running under Subtrace. Send a test HTTP
-request to your backend and see it appear in the Subtrace dashboard.
+Congratulations! Your app is now running under Subtrace. Send a HTTP request to
+your app and you'll see it automatically appear in the Subtrace dashboard.
