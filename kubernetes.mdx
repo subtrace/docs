@@ -25,5 +25,5 @@ spec:
       - name: node
         image: adtac/kubedemo
         command: ["bash"]
-        args: ["-c", "subtrace run -log -- node /server.js"]
+        args: ["-c", "subtrace run -log=true -- node /server.js"]
 ```
