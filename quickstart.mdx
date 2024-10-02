@@ -20,7 +20,7 @@ docker run -it --rm -e SUBTRACE_TOKEN=$SUBTRACE_TOKEN -v worker:/var/lib/clickho
 ```bash
 export SUBTRACE_TOKEN=
 curl -fsSL https://subtrace.dev/install.sh | sh
-subtrace run -log -- node ./server.js
+subtrace run -log=true -- node ./server.js
 ```
 
 Congratulations! Your app is now running under Subtrace. Send a HTTP request to
