@@ -46,6 +46,12 @@
       "pages": [
         "quickstart"
       ]
+    },
+    {
+      "group": "Install Subtrace",
+      "pages": [
+        "kubernetes"
+      ]
     }
   ],
   "footerSocials": {

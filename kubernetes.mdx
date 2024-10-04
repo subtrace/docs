@@ -57,8 +57,8 @@ to create one.
 </Tip>
 
 <Tip>
-Don't forget to set the `securityContext` field. Subtrace needs the
-`SYS_PTRACE` capability in order to trace your app's requests.
+Don't forget to set the `securityContext` field in the container spec. Subtrace
+needs the `SYS_PTRACE` capability in order to trace your app's requests.
 </Tip>
 
 And that's it! Try sending a HTTP request to the [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/)
