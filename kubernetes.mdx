@@ -2,6 +2,7 @@
 title: "Installing Subtrace on Kubernetes"
 sidebarTitle: "Kubernetes"
 description: "Monitor requests in your Kubernetes clusters, pods and deployments with Subtrace."
+icon: "cubes"
 ---
 
 If you use a Kubernetes cluster and you need to monitor your app's requests in
@@ -16,9 +17,9 @@ in your app's Docker image:
 + CMD ["subtrace", "run", "--", "node", "./server.js"]
 ```
 
-Build and push the new Docker image as you normally do. Then update your
-Kubernetes pod spec to point to the newly tagged image. Here is an example
-`deployment.yaml` to deploy the new image to your cluster for reference:
+Build and push the new Docker image just like you used to before changing your
+Dockerfile to install Subtrace. Then update your Kubernetes pod spec to point
+to the new image. Here is an example `deployment.yaml` for reference:
 
 ```yaml
 apiVersion: apps/v1
@@ -62,5 +63,12 @@ Don't forget to set the `securityContext` field in the container spec. Subtrace
 needs the `SYS_PTRACE` capability in order to trace your app's requests.
 </Tip>
 
-And that's it! Try sending a HTTP request to the [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/)
-corresponding to this deployment and you'll see it automatically appear in the Subtrace dashboard.
+Finish by applying your changes to the cluster:
+
+```
+kubectl apply -f ./deployment.yaml
+```
+
+And that's it! Send a HTTP request to the [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/)
+corresponding to this deployment and you should see it automatically appear in
+the Subtrace dashboard.
