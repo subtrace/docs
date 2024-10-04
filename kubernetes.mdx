@@ -3,27 +3,62 @@ title: 'Running Subtrace on Kubernetes'
 description: 'Trace all requests within your Kubernetes clusters, pods and deployment.'
 ---
 
-TODO: details
+If you use a Kubernetes cluster and you need to monitor your app's requests in
+production, Subtrace is a great fit.
 
+Start by making the following change to your `Dockerfile` to install Subtrace
+in your app's Docker image:
+
+```diff
+- CMD ["node", "./server.js"]
++ RUN curl -fsSL https://subtrace.dev/install.sh | sh
++ CMD ["subtrace", "run", "--", "node", "./server.js"]
 ```
+
+Build and push the new Docker image as you normally do. Then update your
+Kubernetes pod spec to point to the newly tagged image. Here is an example
+`deployment.yaml` to deploy the new image to your cluster for reference:
+
+```yaml
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  labels:
-    app: kubedemo
+  name: my-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: kubedemo
+      app: my-app
   template:
     metadata:
       labels:
-        app: kubedmeo
+        app: my-app
     spec:
       containers:
-      - name: node
-        image: adtac/kubedemo
-        command: ["bash"]
-        args: ["-c", "subtrace run -log=true -- node /server.js"]
+      - name: my-container
+        image: ghcr.io/NAMESPACE/IMAGE_NAME:latest
+        env:
+        - name: SUBTRACE_TOKEN
+          valueFrom:
+            secretKeyRef:
+              name: env-secrets
+              key: SUBTRACE_TOKEN
+        securityContext:
+          capabilities:
+            add: ["SYS_PTRACE"]
 ```
+
+<Tip>
+Make sure the container has the `SUBTRACE_TOKEN` environment variable in your
+deployment YAML. Typically, this is done with a [Kubernetes secret](https://kubernetes.io/docs/concepts/configuration/secret/),
+but if your app uses an external secret manager, consult its documentation. If
+you don't have a Subtrace token yet, go to [subtrace.dev/dashboard/tokens](https://subtrace.dev/dashboard/tokens)
+to create one.
+</Tip>
+
+<Tip>
+Do not forget to set the `securityContext` 
+</Tip>
+
+And that's it! Try sending a HTTP request to the [Kubernetes service](https://kubernetes.io/docs/concepts/services-networking/service/)
+corresponding to this deployment and you'll see it automatically appear in the Subtrace dashboard.
