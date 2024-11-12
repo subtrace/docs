@@ -9,15 +9,7 @@ icon: "rocket"
 
 2. Click **Create API token** to generate a Subtrace API token for your namespace.
 
-3. Start a worker node with Docker. All of your monitoring data will live on this node. Don't forget to set the `SUBTRACE_TOKEN` environment variable.
-
-```bash
-export SUBTRACE_TOKEN=
-docker pull subtrace.dev/worker:latest
-docker run -it --rm -e SUBTRACE_TOKEN=$SUBTRACE_TOKEN -v worker:/var/lib/clickhouse --cap-add SYS_PTRACE subtrace.dev/worker:latest
-```
-
-4. Install Subtrace and start your app under Subtrace to automatically trace requests. Again, don't forget to set the `SUBTRACE_TOKEN` environment variable.
+3. Install Subtrace and start your app under Subtrace to automatically trace requests. Again, don't forget to set the `SUBTRACE_TOKEN` environment variable.
 
 ```bash
 export SUBTRACE_TOKEN=
