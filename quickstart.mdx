@@ -5,20 +5,46 @@ description: "Welcome! Follow the steps below to get started with Subtrace."
 icon: "rocket"
 ---
 
-1. Go to [subtrace.dev/dashboard/tokens](https://subtrace.dev/dashboard/tokens) and log in with your single sign-on (SSO) identity provider.
+## Signing up to use Subtrace
 
-2. Click **Create API token** to generate a Subtrace API token for your namespace.
+1. Go to [https://subtrace.dev/login](https://subtrace.dev/login) and log in with your single sign-on (SSO) identity provider.
 
-3. Install Subtrace and start your app under Subtrace to automatically trace requests. Again, don't forget to set the `SUBTRACE_TOKEN` environment variable.
+2. If this is your first time using Subtrace, you will be instructed to create your first namespace.
+
+Once this is done, you should see the Subtrace dashboard. There's nothing there yet, so the next step is to ingest some traces.
+
+## Setting up a Subtrace worker
+
+The worker is where all your tracing data lives. You can set one up on any machine that's connected to the internet.
+
+1. Go to the [Subtrace dashboard](https://subtrace.dev/dashboard/) and click on "Tokens" in the left pane.
+
+2. Click **Create worker token** to generate a Subtrace worker token. 
+
+3. Run the Subtrace worker docker image. Don't forget to set the `SUBTRACE_TOKEN` environment variable to the token you just generated.
 
 ```bash
-export SUBTRACE_TOKEN=
+docker run -d --env SUBTRACE_TOKEN='subt_...' ghcr.io/subtrace/worker:latest
+```
+
+This sets up a worker that listens for your app's traces.
+
+## Running your app under Subtrace
+
+1. Go to the [Subtrace dashboard](https://subtrace.dev/dashboard/) and click on "Tokens" in the left pane.
+
+2. Click **Create tracer token** to generate a Subtrace tracer token. 
+
+3. Install Subtrace and start your app under Subtrace to automatically trace requests. Again, don't forget to set the `SUBTRACE_TOKEN` environment variable to the token you just generated.
+
+```bash
+export SUBTRACE_TOKEN=subt_...
 curl -fsSL https://subtrace.dev/install.sh | sh
 subtrace run -- node ./server.js
 ```
 
 Congratulations! Your app is now running under Subtrace. Send a HTTP request to
-your app and you should see it automatically appear in the Subtrace dashboard.
+your app and you should see it automatically appear in the [Subtrace dashboard](https://subtrace.dev/dashboard/).
 
 While this is sufficient to get started with Subtrace, you should install
 Subtrace everywhere in your infrastructure to get the most out of it. Pick the
