@@ -9,25 +9,9 @@ icon: "rocket"
 
 1. Go to [https://subtrace.dev/login](https://subtrace.dev/login) and log in with your single sign-on (SSO) identity provider.
 
-2. If this is your first time using Subtrace, you will be instructed to create your first namespace.
+2. If this is your first time using Subtrace, you will be instructed to create your first namespace and setup a worker. Follow the on screen instructions, and make sure your worker is connected before proceeding.
 
 Once this is done, you should see the Subtrace dashboard. There's nothing there yet, so the next step is to ingest some traces.
-
-## Setting up a Subtrace worker
-
-The worker is where all your tracing data lives. You can set one up on any machine that's connected to the internet.
-
-1. Go to the [Subtrace dashboard](https://subtrace.dev/dashboard/) and click on "Tokens" in the left pane.
-
-2. Click **Create worker token** to generate a Subtrace worker token. 
-
-3. Run the Subtrace worker docker image. Don't forget to set the `SUBTRACE_TOKEN` environment variable to the token you just generated.
-
-```bash
-docker run -d --env SUBTRACE_TOKEN='subt_...' ghcr.io/subtrace/worker:latest
-```
-
-This sets up a worker that listens for your app's traces.
 
 ## Running your app under Subtrace
 
