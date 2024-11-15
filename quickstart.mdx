@@ -18,14 +18,14 @@ icon: "rocket"
 **Step 4**: Install the latest version of Subtrace, set the `SUBTRACE_TOKEN` environment variable to the token you generated in the previous step, and use `subtrace run` to start your app.
 
 ```bash
-# install the latest version of Subtrace
-curl -fsSL -o /usr/bin/subtrace https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x /usr/bin/subtrace
+# install the latest version of Subtrace (replace amd64 with arm64)
+curl -fsSLO https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x ./subtrace
 
-# set the token you generated in Step 3
+# this is just an example, use the token you generated in Step 3
 export SUBTRACE_TOKEN=subt_CbBZqZousFZ2IBIATEgKCNPvAtZuaRxbtdlzlzmUqNg
 
-# start your app under Subtrace
-subtrace run -- node ./app.js
+# start your app like you normally do, but using Subtrace
+./subtrace run -- node ./app.js
 ```
 
 Congratulations! Your app is now running under Subtrace. Your requests should automatically appear in the [Subtrace dashboard](https://subtrace.dev/dashboard/).
