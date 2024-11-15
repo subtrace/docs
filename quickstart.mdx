@@ -19,13 +19,16 @@ icon: "rocket"
   <img className="rounded-md" src="/quickstart-2-token.png" />
 </Frame>
 
-**Step 4**: Download the latest version of Subtrace, set the `SUBTRACE_TOKEN` environment variable to the token you generated in the previous step, and use `subtrace run` to start your app.
+**Step 4**: Install the latest version of Subtrace, set the `SUBTRACE_TOKEN` environment variable to the token you generated in the previous step, and use `subtrace run` to start your app.
 
 ```bash
+# install the latest version of Subtrace
 curl -fsSL -o /usr/bin/subtrace https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x /usr/bin/subtrace
 
+# set the token you generated in Step 3
 export SUBTRACE_TOKEN=subt_CbBZqZousFZ2IBIATEgKCNPvAtZuaRxbtdlzlzmUqNg
 
+# start your app under Subtrace
 subtrace run -- node ./app.js
 ```
 
