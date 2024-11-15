@@ -5,37 +5,34 @@ description: "Welcome! Follow the steps below to get started with Subtrace."
 icon: "rocket"
 ---
 
-## Signing up to use Subtrace
+**Step 1**: Go to [https://subtrace.dev/login](https://subtrace.dev/login) and log in with your single sign-on (SSO) identity provider.
 
-1. Go to [https://subtrace.dev/login](https://subtrace.dev/login) and log in with your single sign-on (SSO) identity provider.
+**Step 2**: On the **Let's set up your database** page, follow the onboarding instructions to start the database worker service where your backend requests will be stored.
 
-2. If this is your first time using Subtrace, you will be instructed to create your first namespace and setup a worker. Follow the on screen instructions, and make sure your worker is connected before proceeding.
+<Frame>
+  <img className="rounded-md" src="/quickstart-1-onboarding.png" />
+</Frame>
 
-Once this is done, you should see the Subtrace dashboard. There's nothing there yet, so the next step is to ingest some traces.
+**Step 3**: Go to the **Tokens** page on the dashboard and click **Create tracer token**.
 
-## Running your app under Subtrace
+<Frame>
+  <img className="rounded-md" src="/quickstart-2-token.png" />
+</Frame>
 
-1. Go to the [Subtrace dashboard](https://subtrace.dev/dashboard/) and click on "Tokens" in the left pane.
-
-2. Click **Create tracer token** to generate a Subtrace tracer token. 
-
-3. Install Subtrace and start your app under Subtrace to automatically trace requests. Again, don't forget to set the `SUBTRACE_TOKEN` environment variable to the token you just generated.
+**Step 4**: Download the latest version of Subtrace, set the `SUBTRACE_TOKEN` environment variable to the token you generated in the previous step, and use `subtrace run` to start your app.
 
 ```bash
-export SUBTRACE_TOKEN=subt_...
-curl -fsSL https://subtrace.dev/install.sh | sh
-subtrace run -- node ./server.js
+curl -fsSL -o /usr/bin/subtrace https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x /usr/bin/subtrace
+
+export SUBTRACE_TOKEN=subt_CbBZqZousFZ2IBIATEgKCNPvAtZuaRxbtdlzlzmUqNg
+
+subtrace run -- node ./app.js
 ```
 
-Congratulations! Your app is now running under Subtrace. Send a HTTP request to
-your app and you should see it automatically appear in the [Subtrace dashboard](https://subtrace.dev/dashboard/).
+Congratulations! Your app is now running under Subtrace. Your requests should automatically appear in the [Subtrace dashboard](https://subtrace.dev/dashboard/).
 
-While this is sufficient to get started with Subtrace, you should install
-Subtrace everywhere in your infrastructure to get the most out of it. Pick the
-one that matches your situation best to learn more:
+While this is sufficient to get started with Subtrace, you should install Subtrace everywhere in your infrastructure to get the most out of it. Pick the one that matches your situation best to learn more:
 
 - [Installing on Kubernetes](/kubernetes)
 
-If your infra uses something that's not listed, we'd love to understand your
-usecase and help you get started with Subtrace. Join our [discord server](https://subtrace.dev/discord)
-or email us at [support@subtrace.dev](support@subtrace.dev) to get in touch.
+If your infra uses something that's not listed, we'd love to understand your usecase and help you get started with Subtrace. Join our [discord server](https://subtrace.dev/discord) or email us at [support@subtrace.dev](support@subtrace.dev) to get in touch.
