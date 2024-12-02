@@ -45,19 +45,15 @@
     {
       "group": "Get Started",
       "pages": [
-        "quickstart"
-      ]
-    },
-    {
-      "group": "How-to Guides",
-      "pages": [
+        "quickstart",
         {
           "group": "Installing Subtrace",
           "icon": "play",
           "pages": [
             "kubernetes"
           ]
-        }
+        },
+        "benchmarks"
       ]
     }
   ],
