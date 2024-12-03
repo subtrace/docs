@@ -55,6 +55,19 @@
         },
         "benchmarks"
       ]
+    },
+    {
+      "group": "Tutorials",
+      "pages": [
+        {
+          "group": "Using the dashboard",
+          "icon": "chart-column",
+          "pages": [
+            "request-graph",
+            "adding-filter-clauses"
+          ]
+        }
+      ]
     }
   ],
   "footerSocials": {
