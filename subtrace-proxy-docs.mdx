@@ -1,0 +1,171 @@
+---
+title: 'Proxy Command'
+description: 'Learn how to use the subtrace proxy command to trace HTTP traffic through a reverse proxy'
+---
+
+The `subtrace proxy` command creates a reverse proxy that traces HTTP traffic between clients and a remote server. It can filter and analyze requests based on configurable rules.
+
+## Command Structure
+
+```bash
+subtrace proxy [flags]
+```
+
+## Flags
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-config` | Path to configuration file for proxy rules | `""` |
+| `-listen` | Local address to listen on (required) | `""` |
+| `-remote` | Remote address to forward requests to (required) | `""` |
+| `-log` | Log trace events to stderr | `false` if `SUBTRACE_TOKEN` is set, `true` otherwise |
+| `-v` | Enable verbose debug logging | `false` |
+
+## Examples
+
+### Basic Proxy
+
+Forward local traffic to a remote API:
+```bash
+subtrace proxy -listen localhost:8080 -remote api.example.com
+```
+
+### With Configuration File
+
+Use rules to filter requests:
+```bash
+subtrace proxy -listen :8080 -remote api.internal -config proxy-rules.js
+```
+
+### Development Setup
+
+Log locally without sending to Subtrace:
+```bash
+subtrace proxy -listen localhost:3000 -remote localhost:8080 -log
+```
+
+### Debug Mode
+
+Enable verbose logging:
+```bash
+subtrace proxy -v -listen :8080 -remote api.example.com
+```
+
+## Configuration File
+
+The proxy supports JavaScript-based rules for filtering requests. Create a file like `rules.js`:
+
+```javascript
+// Trace only 10% of GET requests to /api
+trace("GET", "/api/*", {
+    sample: 0.1
+})
+
+// Don't trace health checks
+trace("GET", "/health", function() {
+    return false
+})
+
+// Trace all POST requests
+trace("POST", "*", function() {
+    return true
+})
+```
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `SUBTRACE_TOKEN` | Authentication token for Subtrace API |
+| `SUBTRACE_ENDPOINT` | Custom API endpoint (defaults to https://subtrace.dev) |
+| `SUBTRACE_PROXY_LOG` | Alternative to -log flag |
+
+## Captured Data
+
+The proxy captures:
+
+- Full request and response headers
+- Request and response bodies
+- Timing information
+- TLS details (for HTTPS)
+- Source and destination addresses
+- HTTP protocol details
+
+## Features
+
+- HTTP/1.x and HTTP/2 support
+- TLS/HTTPS proxying
+- Request filtering and sampling
+- HAR (HTTP Archive) format capture
+- Automatic header sanitization
+- Configurable logging
+
+## Common Error Messages
+
+```bash
+# Missing required flags
+error: missing -listen and -remote
+
+# Configuration file error
+error: parse config: invalid syntax in rules.js
+
+# Network error
+error: listen tcp :8080: bind: address already in use
+```
+
+## Best Practices
+
+1. Use specific listen addresses for security
+2. Configure sampling rates for high-traffic services
+3. Filter out sensitive endpoints
+4. Monitor proxy resource usage
+5. Use verbose logging for debugging
+6. Regularly rotate/flush trace data
+7. Set appropriate timeouts
+
+## Limitations
+
+- Single proxy instance per listen address
+- Memory usage scales with concurrent connections
+- TLS interception requires additional setup
+- Rule evaluation adds slight latency
+
+## Security Considerations
+
+- Proxy can see all HTTP traffic
+- TLS interception requires trust configuration
+- Consider network access controls
+- Protect configuration files
+- Sanitize sensitive headers
+
+## Example Configuration Patterns
+
+### Basic Load Balancer
+
+```javascript
+trace("*", "*", {
+    sample: 0.01  // Sample 1% of all traffic
+})
+```
+
+### API Monitoring
+
+```javascript
+trace("POST", "/api/v1/*", true)  // Trace all API calls
+trace("GET", "/static/*", false)   // Ignore static content
+```
+
+### Error Tracking
+
+```javascript
+trace("*", "*", function(req, resp) {
+    return resp.statusCode >= 400  // Trace errors
+})
+```
+
+## Additional Resources
+
+- [Subtrace Documentation](https://docs.subtrace.dev)
+- [Proxy Configuration Guide](https://docs.subtrace.dev/proxy/config)
+- [Rule Writing Guide](https://docs.subtrace.dev/proxy/rules)
+- [Security Best Practices](https://docs.subtrace.dev/security)
