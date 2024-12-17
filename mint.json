@@ -68,6 +68,13 @@
           ]
         }
       ]
+    },
+    {
+      "group": "References",
+      "pages": [
+        "references/subtrace-run-doc",
+        "references/subtrace-version-doc"
+      ]
     }
   ],
   "footerSocials": {

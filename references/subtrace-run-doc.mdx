@@ -1,0 +1,139 @@
+---
+title: 'subtrace run'
+description: 'Run a command with HTTP traffic tracing enabled'
+---
+
+The `subtrace run` command allows you to trace HTTP traffic from any application without modifying its code. It works by intercepting network syscalls at runtime and capturing details about HTTP requests and responses.
+
+## Usage
+
+```bash
+subtrace run [flags] -- <command> [arguments]
+```
+
+The double dash (`--`) is required to separate subtrace flags from the command you want to run.
+
+## Flags
+
+| Flag | Description | Default |
+|------|-------------|---------|
+| `-log` | Log trace events to stderr | `false` if `SUBTRACE_TOKEN` is set, `true` otherwise |
+| `-payload-limit` | Maximum size in bytes for request/response body capture | 4096 |
+| `-tls` | Enable TLS traffic interception | `true` |
+| `-v` | Enable verbose debug logging | `false` |
+
+## Examples
+
+### Trace a Python HTTP Server
+
+```bash
+subtrace run -- python -m http.server
+```
+
+### Trace cURL Requests
+
+```bash
+subtrace run -- curl https://api.example.com
+```
+
+### Trace a Node.js Application 
+
+```bash
+subtrace run -- node server.js
+```
+
+### Trace with Limited Payload Size
+
+```bash
+subtrace run -payload-limit 1024 -- ./myapp
+```
+
+### Trace without TLS Interception
+
+```bash
+subtrace run -tls=false -- ./myapp
+```
+
+## How It Works
+
+When you run an application with `subtrace run`:
+
+1. Subtrace creates a secure sandbox environment using Linux seccomp filters
+2. It intercepts network-related system calls like `socket()`, `connect()`, and `accept()`
+3. For HTTP traffic, it captures:
+   - Request method, path, headers
+   - Response status code, headers
+   - Request and response bodies (up to payload limit)
+   - Timing information
+   - TLS server names and certificates
+4. All captured data is sent to the Subtrace backend for analysis
+
+## Requirements
+
+- Linux kernel version 5.14 or newer
+- `CAP_SYS_PTRACE` capability when running in production
+- Root access or `CAP_SYS_ADMIN` capability for TLS interception
+
+## Environment Variables
+
+| Variable | Description |
+|----------|-------------|
+| `SUBTRACE_TOKEN` | Authentication token for the Subtrace API |
+| `SUBTRACE_ENDPOINT` | Custom API endpoint (defaults to https://subtrace.dev) |
+
+## Limitations
+
+- Works only on Linux systems
+- Cannot trace statically linked binaries
+- May require configuration changes for applications that perform certificate pinning
+
+## Error Handling
+
+If subtrace encounters an error while tracing, it will:
+
+1. Log the error to stderr with context
+2. Continue tracing other requests if possible
+3. Preserve the original application behavior
+
+Common error scenarios:
+
+```bash
+# Missing SUBTRACE_TOKEN
+subtrace: error: SUBTRACE_TOKEN is empty
+
+# Insufficient kernel version
+subtrace: error: unsupported Linux kernel version (got 4.19, want 5.14+)
+
+# Missing capabilities
+subtrace: error: was subtrace started with the SYS_PTRACE capability?
+```
+
+## Example Output
+
+When `-log` is enabled, subtrace prints trace events in a key-value format:
+
+```
+time="2024-03-14T15:04:05Z" event_id="550e8400-e29b-41d4-a716-446655440000" http_req_method="GET" http_req_path="/api/users" http_resp_status_code=200 http_duration=127
+```
+
+## Best Practices
+
+1. Always use the latest version of subtrace for best compatibility
+2. Set appropriate payload size limits based on your application
+3. Consider disabling TLS interception if not needed
+4. Use verbose logging (-v) when debugging trace issues
+5. Set up proper access controls for the Subtrace API token
+
+## Security Considerations
+
+- Subtrace can see all HTTP traffic, including sensitive headers and payloads
+- TLS interception requires trust in Subtrace's certificate authority
+- API tokens should be treated as sensitive credentials
+- Consider using separate tokens for development and production
+
+## Related Commands
+
+- `subtrace proxy` - Run a reverse proxy with tracing
+- `subtrace version` - Show version information
+- `subtrace worker` - Start a worker node (for self-hosted setups)
+
