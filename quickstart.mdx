@@ -1,37 +1,136 @@
 ---
 title: "Subtrace Quickstart"
 sidebarTitle: "Quickstart"
-description: "Welcome! Follow the steps below to get started with Subtrace."
+description: "Welcome! Follow the steps below to get started tracing your HTTP/HTTPS requests and service calls."
 icon: "rocket"
 ---
 
 **Step 1**: Go to [https://subtrace.dev/login](https://subtrace.dev/login) and log in with your single sign-on (SSO) identity provider.
 
-**Step 2**: On the **Let's set up your database** page, follow the onboarding instructions to start the database worker service where your backend requests will be stored.
+**Step 2**: Visit the [Let's set up your database](https://subtrace.dev/onboarding) onboarding page and start the database worker service where your backend requests will be stored.
+
 
 <img className="rounded-xl" src="/quickstart-1-onboarding.png" />
 
-**Step 3**: Go to the **Tokens** page on the dashboard and click **Create tracer token**.
+<Accordion title="What is the highlighted install command?">
+    ```bash
+    docker run -d \
+    -e SUBTRACE_TOKEN=subt_REDACTED_WORKER_TOKEN \
+    -v subtrace:/var/lib/clickhouse \
+    subtrace.dev/worker:latest
+    ```
+    
+    Run this command with the **worker token** from the [Tokens](https://subtrace.dev/dashboard/workspace/tokens) page. 
+    
+    <Info>
+    This is required to authenticate your cloud and self-hosted deployments of Subtrace.
+    </Info>
+
+</Accordion>
+
+**Step 3**: Go to the [Tokens](https://subtrace.dev/dashboard/workspace/tokens) page on the dashboard and click **Create tracer token**.
 
 <img className="rounded-xl" src="/quickstart-2-token.png" />
 
-**Step 4**: Install the latest version of Subtrace, set the `SUBTRACE_TOKEN` environment variable to the token you generated in the previous step, and use `subtrace run` to start your app.
+**Step 4**: Install the latest version of Subtrace, set the `SUBTRACE_TOKEN` environment variable to the **tracer token** you generated in step 3, and use `subtrace run` to start your app.
+<AccordionGroup>
+    <CodeGroup>
+        ```bash bash
+        # replace amd64 with arm64 if applicable
+        curl -fsSLO https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x ./subtrace
 
-```bash
-# replace amd64 with arm64 if applicable
-curl -fsSLO https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x ./subtrace
+        # this is just an example, use the token you generated in Step 3
+        export SUBTRACE_TOKEN=subt_REDACTED_TRACER_TOKEN
 
-# this is just an example, use the token you generated in Step 3
-export SUBTRACE_TOKEN=subt_CbBZqZousFZ2IBIATEgKCNPvAtZuaRxbtdlzlzmUqNg
+        # start your app like you normally do, but using Subtrace
+        ./subtrace run -- node ./app.js
+        ```
+        ```javascript app.js
+        try {
+            // Successful request
+            console.log("Making successful request...");
+            const successResponse = await fetch('http://jsonplaceholder.typicode.com/posts/1');
+            console.log(`Success! Status code: ${successResponse.status}`);
+            const successData = await successResponse.json();
+            console.log(`Response:`, successData);
+            console.log('');
 
-# start your app like you normally do, but using Subtrace
-./subtrace run -- node ./app.js
-```
+            // Failed request (intentionally wrong URL)
+            console.log("Making request that will fail...");
+            try {
+                const failedResponse = await fetch('http://jsonplaceholder.typicode.com/nonexistent', { method: 'POST' });
+                console.log(`Status code: ${failedResponse.status}`);
+            } catch (error) {
+                console.log('Request failed:', error.message);
+            }
+        } catch (error) {
+            console.error('Unexpected error:', error.message);
+        }                                                                                                                                                         
+        ```
+
+        ```python main.py
+        import requests
+
+        # Successful request
+        print("Making successful request...")
+        response = requests.get('https://jsonplaceholder.typicode.com/posts/1')
+        print(f"Success! Status code: {response.status_code}")
+        print(f"Response: {response.json()}\n")
+
+        # Failed request (intentionally wrong URL)
+        print("Making request that will fail...")
+        try:
+            response = requests.post('https://jsonplaceholder.typicode.com/nonexistent')
+            print(f"Status code: {response.status_code}")
+        except requests.exceptions.RequestException as e:
+            print(f"Request failed as expected: {e}")
+        ```
+    </CodeGroup>
+    <Accordion title="What does the `--` mean?">
+        The `--` is a [bash builtin command](https://www.gnu.org/software/bash/manual/html_node/Bash-Builtins.html) that is used to indicate that all arguments after it are treated as a command to run, not as arguments for `subtrace run`.
+    </Accordion>
+</AccordionGroup>
+
+**Step 5** *(optional)*: Add the Subtrace executable to your `$PATH` so you can run `subtrace` from anywhere.
+    - Check if `/usr/local/bin` exists in your `$PATH`. If it doesn't exist, create it.
+    <CodeGroup>
+    ```bash bash
+    echo $PATH && sudo mkdir -p /usr/local/bin
+    ```
+    ```bash output
+    /usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin
+    ```
+    </CodeGroup>
+
+    - Move the `subtrace` executable to `/usr/local/bin`.
+
+    ```bash
+    sudo mv ./subtrace /usr/local/bin/subtrace
+    ```
+    - Test that subtrace still works.
+
+    <CodeGroup>
+    ```bash bash
+    subtrace version
+    ```
+    ```bash output
+    b149
+        commit 989a856 at 2024-12-13T19:19:15Z
+        built with go1.23.4 linux/amd64 at 2024-12-13T19:19:30Z hash 63ec488edc27699bf65d31a26698d5d7b175afa39ac91554b81acc83d01c999e
+        kernel Linux 6.11.0-13-generic on x86_64
+        running on linux/amd64 with uid 1000 gid 1000
+        effective caps 0x0000000000000000 -chown -dac_override -dac_read_search -fowner -fsetid -kill -setgid -setuid -setpcap -linux_immutable -net_bind_service -net_broadcast -net_admin -net_raw -ipc_lock -ipc_owner -sys_module -sys_rawio -sys_chroot -sys_ptrace -sys_pacct -sys_admin -sys_boot -sys_nice -sys_resource -sys_time -sys_tty_config -mknod -lease -audit_write -audit_control -setfcap -mac_override -mac_admin -syslog -wake_alarm -block_suspend -audit_read -perfmon -bpf -checkpoint_restore
+    ```
+    </CodeGroup>
 
 Congratulations! Your app is now running under Subtrace. Your requests should automatically appear in the [Subtrace dashboard](https://subtrace.dev/dashboard/).
 
 While this is sufficient to get started with Subtrace, you should install Subtrace everywhere in your infrastructure to get the most out of it. Pick the one that matches your situation best to learn more:
 
-- [Installing on Kubernetes](/kubernetes)
+<CardGroup>
+    <Card title="Installing on Kubernetes" href="/kubernetes" icon="fa-solid fa-cloud" iconType="regular">
+        Install Subtrace on Kubernetes to observe all your service calls.
+    </Card>
+</CardGroup>
 
 If your infra uses something that's not listed, we'd love to understand your usecase and help you get started with Subtrace. Join our [discord server](https://subtrace.dev/discord) or email us at [support@subtrace.dev](support@subtrace.dev) to get in touch.
