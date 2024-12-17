@@ -1,0 +1,84 @@
+---
+title: 'subtrace version'
+description: 'Display version and system information about the Subtrace installation'
+---
+
+## Synopsis
+
+```bash
+subtrace version [flags]
+```
+
+## Description
+
+The `subtrace version` command provides detailed information about your Subtrace installation, including build details, system information, and capabilities. This information is particularly useful for troubleshooting, bug reports, and verifying your installation.
+
+## Options
+
+| Flag   | Description                     | Default |
+|--------|---------------------------------|---------|
+| -json  | Output version info as JSON     | false   |
+
+## Output Information
+
+The command outputs the following information:
+- Release version
+- Commit hash and timestamp
+- Build information (Go version, OS, architecture)
+- Executable hash
+- Kernel information
+- Runtime details (UID, GID)
+- Effective capabilities
+
+## Examples
+
+### Basic Usage
+Display version information in standard format:
+```bash
+$ subtrace version
+b123
+  commit abc123def at 2024-03-15T10:30:00Z 
+  built with go1.22.0 linux/amd64 at 2024-03-15T10:30:00Z hash 8a7b6c5d4e3f...
+  kernel Linux 5.15.0 on x86_64
+  running on linux/amd64 with uid 1000 gid 1000
+  effective caps 0x0000000000000000 -chown -dac_override -dac_read_search ...
+```
+
+### JSON Output
+Display version information in JSON format:
+```bash
+$ subtrace version -json
+{
+  "release": "b123",
+  "commitHash": "abc123def",
+  "commitTime": "2024-03-15T10:30:00Z",
+  "buildTime": "2024-03-15T10:30:00Z",
+  "buildGoVersion": "go1.22.0",
+  "buildOS": "linux",
+  "buildArch": "amd64",
+  "executableHash": "8a7b6c5d4e3f...",
+  "kernelName": "Linux",
+  "kernelVersion": "5.15.0",
+  "kernelArch": "x86_64",
+  "uid": 1000,
+  "gid": 1000,
+  "effectiveCaps": "0x0000000000000000 -chown -dac_override ..."
+}
+```
+
+## Use Cases
+
+The version command is commonly used for:
+- Checking which version of Subtrace is installed
+- Gathering system information for bug reports
+- Verifying the build environment and capabilities
+- Getting JSON-formatted version data for programmatic use
+- Troubleshooting version-specific issues
+- Verifying system compatibility
+
+## Notes
+
+- The executable hash is calculated from the first 64MB of the binary
+- Capability flags are only shown on Linux systems
+- JSON output can be particularly useful for integration with other tools
+- All timestamps are in UTC
