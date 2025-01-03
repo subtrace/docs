@@ -13,7 +13,7 @@ in your app's Docker image:
 
 ```diff
 - CMD ["node", "./app.js"]
-+ RUN curl -fsSLO https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x ./subtrace
++ RUN curl -fsSLO https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace && chmod +x ./subtrace
 + CMD ["./subtrace", "run", "--", "node", "./app.js"]
 ```
 
