@@ -19,7 +19,7 @@ icon: "rocket"
 
 ```bash
 # replace amd64 with arm64 if applicable
-curl -fsSLO https://subtrace.dev/download/latest/linux/amd64/subtrace && chmod +x ./subtrace
+curl -fsSLO https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace && chmod +x ./subtrace
 
 # this is just an example, use the token you generated in Step 3
 export SUBTRACE_TOKEN=subt_CbBZqZousFZ2IBIATEgKCNPvAtZuaRxbtdlzlzmUqNg
