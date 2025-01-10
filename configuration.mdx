@@ -1,0 +1,71 @@
+---
+title: "Configuring Subtrace"
+sidebarTitle: "Configuration"
+description: "Choosing which requests to trace"
+icon: "gear"
+---
+
+You can customize which requests you want Subtrace to trace. This is done by specifying a config file using the `--config` option when starting Subtrace:
+
+```bash
+./subtrace run --config subtrace.yaml -- node ./server.js
+```
+
+The `subtrace.yaml` file contains rules that specify which requests you would like Subtrace to trace (_include_) or ignore (_exclude_). You can see the full specification [here](#config-file-specification).
+
+For example, assume you want to avoid tracing a particularly noisy `/api/HealthCheck` endpoint. You could use a config file that looks like this: 
+
+```yaml
+# subtrace.yaml
+rules:
+- if: request.url.endsWith("/api/HealthCheck")
+  then: exclude
+```
+
+If a config file contains multiple rules, then they are run in order of definition. The first matching rule is applied to decide whether to trace the request. If no matching rule is found, the request is traced by default. 
+
+Let's say you only wanted to trace requests where there was a server side error (HTTP status 5xx). You could use a config file like this:
+
+```yaml
+# subtrace.yaml
+rules:
+- if: response.status >= 500
+  then: include
+- if: true
+  then: exclude
+```
+
+Note that the second rule is necessary to avoid tracing all other requests, since requests are traced by default if no matching rule is found.
+
+## Config file Specification
+
+#### `rules`
+
+Defines the sequence of rules that make up the config file.
+
+#### `rules.if`
+
+An expression that specifies whether a request matches this rule. This is an expression written in the [Common Expression Language (CEL)](https://github.com/google/cel-spec/blob/master/doc/intro.md), which allows for simple expressions involving equality comparisons, arithmetic, and boolean logic.
+
+As an example, to match POST requests that fail with 5xx errors, you could use the expression `request.method == "POST" && response.status >= 500`.
+
+In general, this can be any CEL expression involving the `request` and `response` variables. See [here](#request-and-response-variables) for more details.
+
+#### `rules.then`
+
+Specifies what to do when a request matches this rule. Possible values are: 
+- **include**: indicates that the request should be traced
+- **exclude**: indicates that the request should be ignored
+
+### Request and response variables
+
+The `request` and `response` variables have the following properties associated with them:
+
+#### `request.method`
+Request method (GET, POST, ...).
+
+#### `request.url`
+Absolute URL of the request (fragments are not included).
+
+#### `response.status`
+Response status code.
