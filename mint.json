@@ -52,6 +52,7 @@
       "group": "Guides",
       "pages": [
         "kubernetes",
+        "nodejs-express",
         "python-fastapi",
         "python-gunicorn",
         "python-flask",
