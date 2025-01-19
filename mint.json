@@ -53,7 +53,8 @@
       "pages": [
         "kubernetes",
         "python-fastapi",
-        "python-gunicorn"
+        "python-gunicorn",
+        "python-flask"
       ]
     },
     {
