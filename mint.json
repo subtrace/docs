@@ -54,7 +54,8 @@
         "kubernetes",
         "python-fastapi",
         "python-gunicorn",
-        "python-flask"
+        "python-flask",
+        "php-laravel"
       ]
     },
     {
