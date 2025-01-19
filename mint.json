@@ -45,21 +45,21 @@
     {
       "group": "Get Started",
       "pages": [
-        "quickstart",
-        {
-          "group": "Installing Subtrace",
-          "icon": "play",
-          "pages": [
-            "kubernetes"
-          ]
-        },
-        "benchmarks"
+        "quickstart"
+      ]
+    },
+    {
+      "group": "Guides",
+      "pages": [
+        "kubernetes",
+        "python-fastapi"
       ]
     },
     {
       "group": "Reference",
       "pages": [
-        "configuration"
+        "configuration",
+        "benchmarks"
       ]
     },
     {
