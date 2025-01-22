@@ -68,13 +68,6 @@
       ]
     },
     {
-      "group": "Reference",
-      "pages": [
-        "configuration",
-        "benchmarks"
-      ]
-    },
-    {
       "group": "Tutorials",
       "pages": [
         {
@@ -85,6 +78,12 @@
             "adding-filter-clauses"
           ]
         }
+      ]
+    },
+    {
+      "group": "Advanced",
+      "pages": [
+        "benchmarks"
       ]
     }
   ],
