@@ -1,0 +1,40 @@
+---
+title: "Tags"
+sidebarTitle: "Tags"
+description: "Set tags on requests to categorize them and search faster"
+icon: "tag"
+---
+
+You can configure Subtrace to tag requests to categorize and search faster when
+you're dealing with large request volumes. Tags are commonly used for metadata
+specific to your business, organization, or infrastructure.
+
+An example use-case for tags is when you have a microservice architecture. It's
+useful to tag each request by the service name so that you can later filter for
+network activity within a specific service. Here's an example config:
+
+```yaml
+tags:
+  service_name: payments-api
+  deploy_env: prod
+```
+
+To use this config file, use the `--config` command line flag:
+
+```bash
+./subtrace run --config=/path/to/subtrace.yaml -- node app.js
+```
+
+## Default Tags
+
+Subtrace automatically populates requests with the following set of default set
+of tags based on the information it can gather about the environment:
+
+- `hostname`
+
+The following default tags may be relevant if you're on Google Cloud:
+
+- `gcp_project`
+- `gke_cluster_location`
+- `gke_cluster_name`
+- `gke_node_name`
