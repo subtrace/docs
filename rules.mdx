@@ -21,8 +21,14 @@ rules:
 To use a config file, set the `--config` command line flag when starting
 Subtrace:
 
+```bash
+./subtrace run --config=/path/to/subtrace.yaml -- node app.js
 ```
-./subtrace run --config=subtrace.yaml -- node app.js
+
+You can also pass this as an environment variable:
+
+```bash
+export SUBTRACE_CONFIG=/path/to/subtrace.yaml
 ```
 
 At request time, Subtrace will evaluate all rules in order until a matching
