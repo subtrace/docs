@@ -6,20 +6,18 @@ icon: "tag"
 ---
 
 You can configure Subtrace to tag requests to categorize and search faster when
-you're dealing with large request volumes. Tags are commonly used for metadata
-specific to your business, organization, or infrastructure.
-
-An example use-case for tags is when you have a microservice architecture. It's
-useful to tag each request by the service name so that you can later filter for
-network activity within a specific service. Here's an example config:
+you're dealing with large request volumes. For instance, if you have a
+microservice architecture, it's useful to tag each request by the service name
+so that you can filter requests by service later. Here's an example config:
 
 ```yaml
 tags:
   service_name: payments-api
   deploy_env: prod
+  has_gpu: false
 ```
 
-To use this config file, use the `--config` command line flag:
+Use the `--config` command line flag to pass the config file to Subtrace:
 
 ```bash
 ./subtrace run --config=/path/to/subtrace.yaml -- node app.js
