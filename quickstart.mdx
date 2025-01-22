@@ -5,52 +5,60 @@ description: "Integrate Subtrace with just one command"
 icon: "rocket"
 ---
 
-**Step 1**: Open a terminal and download Subtrace:
+<Steps>
+  <Step title="Download">
+    Open a terminal and download Subtrace:
 
-```bash
-curl -fSLO "https://subtrace.dev/download/$(uname -s)/$(uname -m)/subtrace" && chmod +x ./subtrace
-```
+    ```bash
+    curl -fSLO "https://subtrace.dev/download/$(uname -s)/$(uname -m)/subtrace" && chmod +x ./subtrace
+    ```
+  </Step>
 
-**Step 2**: Run your backend server startup command with Subtrace:
+  <Step title="Run">
+    Run your backend server startup command with Subtrace:
 
-<CodeGroup>
-  ```bash Generic
-  ./subtrace run -- my-app-command
-  ```
+    <CodeGroup>
+      ```bash Generic
+      ./subtrace run -- my-app-command
+      ```
 
-  ```bash Node
-  ./subtrace run -- node server.js
-  ```
+      ```bash Node
+      ./subtrace run -- node server.js
+      ```
 
-  ```bash Go
-  ./subtrace run -- go run .
-  ```
+      ```bash Go
+      ./subtrace run -- go run .
+      ```
 
-  ```bash FastAPI
-  ./subtrace run -- fastapi run main.py
-  ```
+      ```bash FastAPI
+      ./subtrace run -- fastapi run main.py
+      ```
 
-  ```bash Flask
-  ./subtrace run -- flask --app hello run
-  ```
+      ```bash Flask
+      ./subtrace run -- flask --app hello run
+      ```
 
-  ```bash Gunicorn
-  ./subtrace run -- gunicorn -w 4 myapp:app
-  ```
+      ```bash Gunicorn
+      ./subtrace run -- gunicorn -w 4 myapp:app
+      ```
 
-  ```bash Laravel
-  ./subtrace run -- php artisan serve
-  ```
-</CodeGroup>
+      ```bash Laravel
+      ./subtrace run -- php artisan serve
+      ```
+    </CodeGroup>
 
-<Expandable title="example output">
-  <img className="rounded-xl" src="/quickstart-link.png" />
-</Expandable>
+    <Expandable title="example output">
+      <img className="rounded-xl" src="/quickstart-link.png" />
+    </Expandable>
+  </Step>
 
-**Step 3**: Open the `subt.link` URL in your browser to watch a live stream of
-your backend server's network logs!
+  <Step title="Finish">
+    Open the `subt.link` URL in your browser to watch a live stream of your
+    backend server's network logs!
 
-<img className="rounded-xl" src="/quickstart-screenshot.png" />
+    <img className="rounded-xl" src="/quickstart-screenshot.png" />
+  </Step>
+</Steps>
 
 Check out the guide specific to your backend language and tech stack for more
 tips and advanced usage:
