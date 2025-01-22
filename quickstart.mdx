@@ -1,40 +1,64 @@
 ---
-title: "Subtrace Quickstart"
+title: "Quickstart"
 sidebarTitle: "Quickstart"
-description: "Welcome! Follow the steps below to get started with Subtrace."
+description: "Integrate Subtrace with just one command"
 icon: "rocket"
 ---
 
-**Step 1**: Go to [https://subtrace.dev/login](https://subtrace.dev/login) and log in with your single sign-on (SSO) identity provider.
-
-**Step 2**: On the **Let's set up your database** page, follow the onboarding instructions to start the database worker service where your backend requests will be stored.
-
-<img className="rounded-xl" src="/quickstart-1-onboarding.png" />
-
-**Step 3**: Go to the **Tokens** page on the dashboard and click **Create tracer token**.
-
-<img className="rounded-xl" src="/quickstart-2-token.png" />
-
-**Step 4**: Install the latest version of Subtrace:
+**Step 1**: Open a terminal and download Subtrace:
 
 ```bash
-curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace" && chmod +x ./subtrace
+curl -fSLO "https://subtrace.dev/download/$(uname -s)/$(uname -m)/subtrace" && chmod +x ./subtrace
 ```
 
-**Step 5**: Set the `SUBTRACE_TOKEN` environment variable to the token you generated in the previous step, and use `subtrace run` to start your app.
+**Step 2**: Run your backend server startup command with Subtrace:
 
-```bash
-# this is just an example, use the token you generated in Step 3
-export SUBTRACE_TOKEN=subt_CbBZqZousFZ2IBIATEgKCNPvAtZuaRxbtdlzlzmUqNg
+<CodeGroup>
+  ```bash Generic
+  ./subtrace run -- my-app-command
+  ```
 
-# start your app like you normally do, but using Subtrace
-./subtrace run -- node ./app.js
-```
+  ```bash Node
+  ./subtrace run -- node server.js
+  ```
 
-Congratulations! Your app is now running under Subtrace. Your requests should automatically appear in the [Subtrace dashboard](https://subtrace.dev/dashboard/).
+  ```bash Go
+  ./subtrace run -- go run .
+  ```
 
-While this is sufficient to get started with Subtrace, you should install Subtrace everywhere in your infrastructure to get the most out of it. Pick the one that matches your situation best to learn more:
+  ```bash FastAPI
+  ./subtrace run -- fastapi run main.py
+  ```
 
-- [Installing on Kubernetes](/kubernetes)
+  ```bash Flask
+  ./subtrace run -- flask --app hello run
+  ```
 
-If your infra uses something that's not listed, we'd love to understand your usecase and help you get started with Subtrace. Join our [discord server](https://subtrace.dev/discord) or email us at [support@subtrace.dev](support@subtrace.dev) to get in touch.
+  ```bash Gunicorn
+  ./subtrace run -- gunicorn -w 4 myapp:app
+  ```
+
+  ```bash Laravel
+  ./subtrace run -- php artisan serve
+  ```
+</CodeGroup>
+
+<Expandable title="example output">
+  <img className="rounded-xl" src="/quickstart-link.png" />
+</Expandable>
+
+**Step 3**: Open the `subt.link` URL in your browser to watch a live stream of
+your backend server's network logs!
+
+<img className="rounded-xl" src="/quickstart-screenshot.png" />
+
+Check out the guide specific to your backend language and tech stack for more
+tips and advanced usage:
+
+- **Node**: [Express.js](/nodejs-express)
+- **Python**: [FastAPI](/python-fastapi), [Flask](/python-flask), [Gunicorn](/python-gunicorn)
+- **Others**: [Go](/golang), [Laravel](/php-laravel)
+
+If your language or framework isn't listed here, let us know and we can help
+you get started. Join our [discord server](https://subtrace.dev/discord) or
+email us at [support@subtrace.dev](support@subtrace.dev) for assistance.
