@@ -43,7 +43,7 @@
   ],
   "navigation": [
     {
-      "group": "Get Started",
+      "group": "Getting Started",
       "pages": [
         "quickstart"
       ]
@@ -58,6 +58,12 @@
         "golang",
         "php-laravel",
         "kubernetes"
+      ]
+    },
+    {
+      "group": "Configuration",
+      "pages": [
+        "rules"
       ]
     },
     {
