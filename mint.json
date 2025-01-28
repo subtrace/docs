@@ -52,6 +52,7 @@
       "group": "Guides",
       "pages": [
         "nodejs-express",
+        "nextjs",
         "python-fastapi",
         "python-gunicorn",
         "python-flask",
