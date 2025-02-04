@@ -1,0 +1,42 @@
+---
+title: "Using Subtrace with Docker Compose"
+sidebarTitle: "Docker Compose"
+description: "Monitor requests in your Docker Compose app."
+icon: "docker"
+---
+
+If you're using Docker Compose to run your app, you can use Subtrace to monitor
+all of your backend requests. Here's how you can get started:
+
+<Steps>
+<Step>
+Make the following change to your `Dockerfile` to install and use Subtrace
+in your app's Docker image:
+
+```diff
+- CMD ["node", "./app.js"]
++ RUN curl -fsSLO https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace && chmod +x ./subtrace
++ CMD ["./subtrace", "run", "--", "node", "./app.js"]
+```
+
+</Step>
+
+<Step>
+Add the following lines to your service's definition in your `compose.yaml`
+file, and then start your app as you nornmally would:
+
+```yaml
+cap_add:
+  - SYS_PTRACE
+```
+
+</Step>
+
+<Step>
+That's it! Open the `subt.link` URL in your browser to see your app's requests
+show up in real time:
+
+<img className="rounded-xl" src="/subt-link-example.png" />
+
+</Step>
+</Steps>
