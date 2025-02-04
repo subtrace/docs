@@ -22,8 +22,7 @@
     "name": "Dashboard",
     "url": "https://subtrace.dev/dashboard"
   },
-  "tabs": [
-  ],
+  "tabs": [],
   "anchors": [
     {
       "name": "Dashboard",
@@ -44,9 +43,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": [
-        "quickstart"
-      ]
+      "pages": ["quickstart"]
     },
     {
       "group": "Guides",
@@ -64,29 +61,15 @@
     },
     {
       "group": "Configuration",
-      "pages": [
-        "rules",
-        "tags"
-      ]
+      "pages": ["rules", "tags"]
     },
     {
       "group": "Tutorials",
-      "pages": [
-        {
-          "group": "Using the dashboard",
-          "icon": "chart-column",
-          "pages": [
-            "request-graph",
-            "adding-filter-clauses"
-          ]
-        }
-      ]
+      "pages": ["using-the-dashboard"]
     },
     {
       "group": "Advanced",
-      "pages": [
-        "benchmarks"
-      ]
+      "pages": ["benchmarks"]
     }
   ],
   "footerSocials": {
