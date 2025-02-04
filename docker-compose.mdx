@@ -23,7 +23,7 @@ in your app's Docker image:
 
 <Step>
 Add the following lines to your service's definition in your `compose.yaml`
-file, and then start your app as you normally would:
+file:
 
 ```yaml
 cap_add:
@@ -33,10 +33,23 @@ cap_add:
 </Step>
 
 <Step>
+Start your app as you normally would:
+
+  <Expandable title="example output">
+    <img className="rounded-xl" src="/docker-compose-link.png" />
+  </Expandable>
+</Step>
+
+<Step>
 That's it! Open the `subt.link` URL in your browser to see your app's requests
 show up in real time:
 
 <img className="rounded-xl" src="/subt-link-example.png" />
+
+<Info>
+  It's possible that the `subt.link` URL is printed from within a container. Be
+  sure to check
+</Info>
 
 </Step>
 </Steps>
