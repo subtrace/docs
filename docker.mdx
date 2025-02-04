@@ -25,9 +25,13 @@ in your app's Docker image:
 Run your Docker container as you normally would, but add `--cap-add=SYS_PTRACE`:
 
 ```diff
-- docker run -dt -p 3000:3000 node-app
-+ docker run -dt -p 3000:3000 --cap-add=SYS_PTRACE node-app
+- docker run -t -p 3000:3000 node-app
++ docker run -t -p 3000:3000 --cap-add=SYS_PTRACE node-app
 ```
+
+<Expandable title="example output">
+  <img className="rounded-xl" src="/docker-link.png" />
+</Expandable>
 
 </Step>
 
