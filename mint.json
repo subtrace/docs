@@ -1,10 +1,10 @@
 {
   "$schema": "https://mintlify.com/schema.json",
   "name": "Subtrace",
-  "favicon": "/favicon.svg",
+  "favicon": "/images/favicon.svg",
   "logo": {
-    "light": "/logo-light.svg",
-    "dark": "/logo-dark.svg",
+    "light": "/images/logo-light.svg",
+    "dark": "/images/logo-dark.svg",
     "href": "https://subtrace.dev"
   },
   "colors": {
