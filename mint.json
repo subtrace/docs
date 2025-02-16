@@ -50,6 +50,7 @@
       "pages": [
         "nodejs-express",
         "nextjs",
+        "sveltekit",
         "python-fastapi",
         "python-gunicorn",
         "python-flask",
