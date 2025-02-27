@@ -64,7 +64,11 @@
     },
     {
       "group": "Configuration",
-      "pages": ["rules", "tags"]
+      "pages": [
+        "rules",
+        "tags",
+        "credentials"
+      ]
     },
     {
       "group": "Tutorials",
