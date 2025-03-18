@@ -5,50 +5,22 @@ description: "Connect your SvelteKit app to Chrome DevTools using Subtrace"
 icon: "node-js"
 ---
 
-You can connect your SvelteKit app to Chrome DevTools with just one command
-to see the status, headers, payload, and latency of all API requests.
-
-For this guide, we'll use a simple SvelteKit app as an example. The app has one page (`+page.svelte`) and one API handler (`routes/api/hello/+server.ts`).
-
-```html
-<!-- +page.svelte -->
-<script>
-  let message = "";
-
-  async function getMessage() {
-    const res = await fetch("/api/hello");
-    const data = await res.json();
-    message = data.message;
-  }
-</script>
-
-<main>
-  <h1>Trigger a GET request with the button.</h1>
-  <button on:click="{getMessage}">Make API call</button>
-  <h2>{message}</h2>
-</main>
-```
-
-```ts
-// routes/api/hello/+server.ts
-let count = 0;
-
-export function GET(): Response {
-  count++;
-  return new Response(
-    JSON.stringify({
-      message: `Called ${count} ${count === 1 ? "time" : "times"}.`,
-    }),
-    { headers: { "Content-Type": "application/json" } }
-  );
-}
-```
+For this guide, we'll use a simple SvelteKit app as an example, but any SvelteKit app should work fine.
+You can find the complete source code for this example [here](https://github.com/subtrace/sveltekit-demo).
 
 To get started, download the latest version of Subtrace using the following command:
 
 ```bash
 curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace"
 chmod +x ./subtrace
+```
+
+Then get a `SUBTRACE_TOKEN` from the Subtrace [dashboard](https://subtrace.dev/dashboard)
+for free and set it as an environment variable.
+
+```bash
+# get a tracer token for free at https://subtrace.dev/dashboard
+export SUBTRACE_TOKEN=
 ```
 
 Build and start your server using Subtrace:
@@ -59,11 +31,6 @@ npm run build
 ./subtrace run -- npm run dev
 ```
 
-Open the `subt.link` URL in your browser to get to the Subtrace dashboard. Go to `localhost:5173`
-and make some requests to the server to see them show up in realtime on the Subtrace dashboard!
-
-<Expandable title="example output">
-  <img className="rounded-xl" src="/images/sveltekit-link.png" />
-</Expandable>
-
-You can find the complete source code for this example [here](https://github.com/subtrace/sveltekit-demo).
+That's it! You can now visit [localhost:5173](localhost:5173) and make requests
+to the app that show up on the Subtrace [dashboard](https://subtrace.dev/dashboard)
+in realtime.
