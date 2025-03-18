@@ -5,46 +5,22 @@ description: "Connect your Next.js backend to Chrome DevTools using Subtrace"
 icon: "node-js"
 ---
 
-You can connect your Next.js backend to Chrome DevTools with just one command.
-With Subtrace, you can inspect the status, headers, payload, and latency of
-all API requests.
-
-For this guide, we'll use a minimal Next.js app as an example. The app has one page (`index.js`) and one API handler (`app/api/foo/route.js`):
-
-```jsx
-// index.jsx
-"use client";
-
-export default function App() {
-  return (
-    <div>
-      <h1>Next.js + Subtrace</h1>
-      <button onClick={handleClick}>Make a call to the server</button>
-    </div>
-  );
-
-  async function handleClick() {
-    const response = await fetch("/api/foo");
-    const data = await response.json();
-    alert(data.message);
-  }
-}
-```
-
-```js
-// app/api/foo/route.js
-export async function GET(req) {
-  return new Response(JSON.stringify({ message: "Hello from the server!" }), {
-    headers: { "Content-Type": "application/json" },
-  });
-}
-```
+For this guide, we'll use a minimal Next.js app as an example, but any Next.js app should work fine.
+You can find the complete source code used in this demo [here](https://github.com/subtrace/nextjs-demo).
 
 To get started, download the latest version of Subtrace using the following command:
 
 ```bash
 curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace"
 chmod +x ./subtrace
+```
+
+Then get a `SUBTRACE_TOKEN` from the Subtrace [dashboard](https://subtrace.dev/dashboard)
+for free and set it as an environment variable.
+
+```bash
+# get a tracer token for free at https://subtrace.dev/dashboard
+export SUBTRACE_TOKEN=
 ```
 
 Build and start your server using Subtrace:
@@ -54,11 +30,4 @@ npm install
 ./subtrace run -- npm run dev
 ```
 
-Open the `subt.link` URL in your browser to get to the Subtrace dashboard. Go to `localhost:3000`
-and make some requests to the server to see them show up in realtime on the Subtrace dashboard!
-
-<Expandable title="example output">
-  <img className="rounded-xl" src="/images/nextjs-link.png" />
-</Expandable>
-
-You can find the complete source code used in this demo [here](https://github.com/subtrace/nextjs-demo).
+That's it! You can now visit [localhost:3000](localhost:3000) to see them automatically appear in the Subtrace [dashboard](https://subtrace.dev/dashboard) in realtime.
