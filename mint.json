@@ -43,7 +43,7 @@
   "navigation": [
     {
       "group": "Getting Started",
-      "pages": ["quickstart"]
+      "pages": ["quickstart", "dashboard"]
     },
     {
       "group": "Guides",
@@ -64,11 +64,7 @@
     },
     {
       "group": "Configuration",
-      "pages": [
-        "rules",
-        "tags",
-        "credentials"
-      ]
+      "pages": ["rules", "tags", "credentials"]
     },
     {
       "group": "Tutorials",
