@@ -46,7 +46,11 @@
       "pages": ["quickstart", "dashboard"]
     },
     {
-      "group": "Guides",
+      "group": "Platforms",
+      "pages": ["docker", "docker-compose", "kubernetes", "fly-io"]
+    },
+    {
+      "group": "Language guides",
       "pages": [
         "nodejs-express",
         "nextjs",
@@ -56,10 +60,7 @@
         "python-flask",
         "golang",
         "php-laravel",
-        "macos",
-        "docker",
-        "docker-compose",
-        "kubernetes"
+        "macos"
       ]
     },
     {
