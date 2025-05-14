@@ -37,8 +37,7 @@ func main() {
 First, download the latest version of Subtrace using the following command:
 
 ```bash
-curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace"
-chmod +x ./subtrace
+curl -fsSL https://subtrace.dev/install.sh | sh
 ```
 
 And get a `SUBTRACE_TOKEN` from the Subtrace [dashboard](https://subtrace.dev/dashboard)
@@ -60,7 +59,7 @@ go build -o main main.go
 And start your server using Subtrace:
 
 ```
-./subtrace run -- ./main
+subtrace run -- ./main
 ```
 
 Send some requests to `localhost:8080` to see them automatically appear in

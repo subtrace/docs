@@ -17,7 +17,7 @@ Subtrace has experimental support for developers on macOS.
     Open a terminal and download the latest version of Subtrace:
 
     ```bash
-    curl -fSLO "https://subtrace.dev/download/$(uname -s)/$(uname -m)/subtrace" && chmod +x ./subtrace
+    curl -fsSL https://subtrace.dev/install.sh | sh
     ```
   </Step>
 
@@ -27,7 +27,7 @@ Subtrace has experimental support for developers on macOS.
 
 
     ```bash
-    ./subtrace proxy 9000:8000
+    subtrace proxy 9000:8000
     ```
 
     <Expandable title="example output">

@@ -12,8 +12,7 @@ and latency of all API requests, which makes you way faster at debugging.
 Download the latest version of Subtrace using the following command:
 
 ```bash
-curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace"
-chmod +x ./subtrace
+curl -fsSL https://subtrace.dev/install.sh | sh
 ```
 
 Then get a `SUBTRACE_TOKEN` from the Subtrace [dashboard](https://subtrace.dev/dashboard)
@@ -27,7 +26,7 @@ export SUBTRACE_TOKEN=
 Then start your Laravel server using Subtrace:
 
 ```
-./subtrace run -- php artisan serve
+subtrace run -- php artisan serve
 ```
 
 Send some requests to your Laravel server to see them automatically appear in

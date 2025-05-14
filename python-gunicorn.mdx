@@ -25,8 +25,7 @@ def app(environ, start_response):
 To start, download the latest version of Subtrace:
 
 ```bash
-curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace"
-chmod +x ./subtrace
+curl -fsSL https://subtrace.dev/install.sh | sh
 ```
 
 Get a `SUBTRACE_TOKEN` from the Subtrace [dashboard](https://subtrace.dev/dashboard)
@@ -40,7 +39,7 @@ export SUBTRACE_TOKEN=
 To start your server on port 8000, run the following command:
 
 ```bash
-./subtrace run -- gunicorn -w 4 myapp:app
+subtrace run -- gunicorn -w 4 myapp:app
 ```
 
 Send a request to `localhost:8000` to see it in the Subtrace dashboard!
