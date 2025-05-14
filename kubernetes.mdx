@@ -13,8 +13,8 @@ in your app's Docker image:
 
 ```diff
 - CMD ["node", "./app.js"]
-+ RUN curl -fsSLO https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace && chmod +x ./subtrace
-+ CMD ["./subtrace", "run", "--", "node", "./app.js"]
++ RUN curl -fsSL https://subtrace.dev/install.sh | sh
++ CMD ["subtrace", "run", "--", "node", "./app.js"]
 ```
 
 Build and push the new Docker image just like you used to before changing your
