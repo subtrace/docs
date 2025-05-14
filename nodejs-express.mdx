@@ -29,8 +29,7 @@ app.listen(port, () => {
 Download the latest version of Subtrace using the following command:
 
 ```bash
-curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace"
-chmod +x ./subtrace
+curl -fsSL https://subtrace.dev/install.sh | sh
 ```
 
 And get a `SUBTRACE_TOKEN` from the Subtrace [dashboard](https://subtrace.dev/dashboard)
@@ -44,7 +43,7 @@ export SUBTRACE_TOKEN=
 Start your server using Subtrace with the following command:
 
 ```
-./subtrace run -- node app.js
+subtrace run -- node app.js
 ```
 
 Send some requests to `localhost:3000` to see them automatically appear in

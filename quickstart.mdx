@@ -11,10 +11,10 @@ you how you can start using Subtrace with just a single command.
 
 <Steps>
   <Step title="Download">
-    Open a terminal and download Subtrace:
+    Open a terminal and install Subtrace:
 
     ```bash
-    curl -fSLO "https://subtrace.dev/download/$(uname -s)/$(uname -m)/subtrace" && chmod +x ./subtrace
+    curl -fsSL https://subtrace.dev/install.sh | sh
     ```
   </Step>
 
@@ -23,31 +23,31 @@ you how you can start using Subtrace with just a single command.
 
     <CodeGroup>
       ```bash Generic
-      ./subtrace run -- my-app-command
+      subtrace run -- my-app-command
       ```
 
       ```bash Node
-      ./subtrace run -- node server.js
+      subtrace run -- node server.js
       ```
 
       ```bash Go
-      ./subtrace run -- go run .
+      subtrace run -- go run .
       ```
 
       ```bash FastAPI
-      ./subtrace run -- fastapi run main.py
+      subtrace run -- fastapi run main.py
       ```
 
       ```bash Flask
-      ./subtrace run -- flask --app hello run
+      subtrace run -- flask --app hello run
       ```
 
       ```bash Gunicorn
-      ./subtrace run -- gunicorn -w 4 myapp:app
+      subtrace run -- gunicorn -w 4 myapp:app
       ```
 
       ```bash Laravel
-      ./subtrace run -- php artisan serve
+      subtrace run -- php artisan serve
       ```
     </CodeGroup>
 

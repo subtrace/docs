@@ -11,8 +11,7 @@ You can find the complete source code for this example [here](https://github.com
 To get started, download the latest version of Subtrace using the following command:
 
 ```bash
-curl -fsSLO "https://subtrace.dev/download/latest/$(uname -s)/$(uname -m)/subtrace"
-chmod +x ./subtrace
+curl -fsSL https://subtrace.dev/install.sh | sh
 ```
 
 Then get a `SUBTRACE_TOKEN` from the Subtrace [dashboard](https://subtrace.dev/dashboard)
@@ -28,7 +27,7 @@ Build and start your server using Subtrace:
 ```bash
 npm install
 npm run build
-./subtrace run -- npm run dev
+subtrace run -- npm run dev
 ```
 
 That's it! You can now visit [localhost:5173](localhost:5173) and make requests
