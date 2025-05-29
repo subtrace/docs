@@ -1,0 +1,40 @@
+---
+title: "Using Subtrace on Elastic Container Service (ECS)"
+sidebarTitle: "Elastic Container Service (ECS)"
+description: "Monitor network requests on AWS ECS using Subtrace."
+icon: "aws"
+---
+
+If you deploy your application on AWS Elastic Container Service (ECS), Subtrace
+is the easiest way to monitor all network activity in your services in realtime.
+
+<Note>
+Currently, you cannot use Subtrace on ECS with the
+[Fargate launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html)
+and you must use the
+[EC2 launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters_ec2.html).
+This is because Subtrace requires a modern Linux kernel (needs 5.14+) to
+function, but the Fargate launch type is still stuck on Linux kernel version
+5.10 as of May 2025.
+
+<Accordion title="How do I create an ECS cluster with EC2 launch type?">
+1. Open **ECS** → **Clusters** → **Create cluster**
+   ![Click create cluster](/images/ecs/0-cluster-create-click.png)
+
+2. Give the cluster a name. Anything alphanumeric + hyphens works. I'm using `my‑fargate‑cluster`.
+   ![Enter cluster name](/images/ecs/1-cluster-name.png)
+
+3. In the **Infrastructure** panel, uncheck **Fargate** and check **Amazon EC2 instances**.
+   ![Select EC2 + ASG](/images/ecs/2-cluster-asg.png)
+
+4. Leave **Create new ASG** selected. ECS will automatically spin up an auto-scaling group so your tasks run on instances that register themselves with the cluster.
+
+5. Choose **Amazon Linux 2023** as the AMI. It ships with Linux kernel version 6.1, which comfortably satisfies Subtrace's 5.14+ requirement.
+   ![Choose Amazon Linux 2023 AMI](/images/ecs/3-cluster-ami.png)
+
+6. Pick any instance type and a minimum/maximum instance limit for the auto-scaling group. You can change this later.
+   ![Set desired capacity](/images/ecs/4-cluster-capacity.png)
+
+7. Scroll to the bottom and click **Create**. ECS will provision the ASG, launch EC2 instances, install the ECs agent, auto‑register them with the new cluster and give you a cluster that's compatible with EC2 launch type tasks.
+</Accordion>
+</Note>
