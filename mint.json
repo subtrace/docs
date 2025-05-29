@@ -47,7 +47,7 @@
     },
     {
       "group": "Platforms",
-      "pages": ["docker", "docker-compose", "kubernetes", "fly-io", "porter"]
+      "pages": ["docker", "docker-compose", "kubernetes", "ecs", "fly-io", "porter"]
     },
     {
       "group": "Language guides",
