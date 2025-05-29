@@ -3,8 +3,8 @@
   "name": "Subtrace",
   "favicon": "/images/favicon.svg",
   "logo": {
-    "light": "/images/logo-light.svg",
-    "dark": "/images/logo-dark.svg",
+    "light": "/images/logo_text_black.svg",
+    "dark": "/images/logo_text_white.svg",
     "href": "https://subtrace.dev"
   },
   "colors": {
