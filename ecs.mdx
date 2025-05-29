@@ -1,21 +1,19 @@
 ---
 title: "Using Subtrace on Elastic Container Service (ECS)"
 sidebarTitle: "Elastic Container Service (ECS)"
-description: "Monitor network requests on AWS ECS using Subtrace."
+description: "Monitor all network requests in your AWS ECS cluster using Subtrace."
 icon: "aws"
 ---
 
 If you deploy your application on AWS Elastic Container Service (ECS), Subtrace
-is the easiest way to monitor all network activity in your services in realtime.
+is the easiest way to monitor the network activity in your cluster in realtime.
 
 <Note>
-Currently, you cannot use Subtrace on ECS with the
+Subtrace requires a Linux kernel of 5.14 or newer, so you’ll have to use the
+[EC2 launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters_ec2.html)
+for your ECS tasks. The
 [Fargate launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html)
-and you must use the
-[EC2 launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters_ec2.html).
-This is because Subtrace requires a modern Linux kernel (needs 5.14+) to
-function, but the Fargate launch type is still stuck on Linux kernel version
-5.10 as of May 2025.
+is still on kernel 5.10 as of May 2025 and is not compatible with Subtrace.
 
 <Accordion title="How do I create an ECS cluster with EC2 launch type?">
 1. Open **ECS** → **Clusters** → **Create cluster**
@@ -38,3 +36,55 @@ function, but the Fargate launch type is still stuck on Linux kernel version
 7. Scroll to the bottom and click **Create**. ECS will provision the ASG, launch EC2 instances, install the ECs agent, auto‑register them with the new cluster and give you a cluster that's compatible with EC2 launch type tasks.
 </Accordion>
 </Note>
+
+### Updating your task definition to support Subtrace
+
+1. Open **ECS** → **Task definitions**, go to your task and click **Create new revision with JSON**.
+   ![open JSON](/images/ecs/5-task-update-button.png)
+
+2. In the JSON editor, add the `SYS_PTRACE` Linux capability to your container `linuxParameters` field:
+
+     ```json
+     "linuxParameters": {
+       "capabilities": {
+         "add": ["SYS_PTRACE"]
+       }
+     },
+     ```
+
+   The `SYS_PTRACE` capability is required because it's what allows Subtrace
+   to automatically monitor network activity without any code changes or root
+   privileges. The ECS UI does not expose this field, hence the JSON-based
+   update to the task definition.
+
+   Set the API token that you created in the [Subtrace dashboard](https://subtrace.dev/dashboard)
+   as an environment variable:
+
+     ```json
+     "environment": [
+       {
+         "name": "SUBTRACE_TOKEN",
+         "value": "subt_****************"
+       }
+     ]
+     ```
+ 
+   As an example, here's what the task JSON should look like:
+
+     ![highlighted task JSON diff](/images/ecs/6-task-json-diff.png)
+
+3. Click **Create** to create a new task revision.
+
+---
+
+### Updating the ECS service to deploy the new revision
+
+4. Back in **Clusters** → **Services** → `my-app-service`, click on **Update service**.
+   ![update service button](/images/ecs/7-service-update-click.png)
+
+5. In the dropdown, select the revision you just created (or leave blank for “latest”).
+   ![choose new revision](/images/ecs/8-service-revision.png)
+
+6. Click **Update** at the bottom. ECS will spin up a new task with the new definition; when it’s healthy, the old one will be stopped.
+
+7. Go to the Subtrace UI and see a realtime stream of all network activity in your service.
