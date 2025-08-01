@@ -33,12 +33,72 @@ Subtrace has experimental support for developers on macOS.
   </Step>
 
   <Step title="Run proxy">
-    Send requests to localhost:9000 instead to proxy them via Subtrace.
+    Update your frontend to use localhost:9000 as the backend endpoint:
 
-    ```bash
-    # change your frontend build to use localhost:9000 as the backend server endpoint
-    curl https://localhost:9000
-    ```
+    <CodeGroup>
+      ```javascript React
+      // curl https://localhost:9000 (old)
+      const API_URL = 'http://localhost:9000'
+      
+      fetch(`${API_URL}/api/users`)
+        .then(res => res.json())
+        .then(data => setUsers(data))
+      ```
+
+      ```javascript Next.js
+      // curl https://localhost:9000 (old)
+      const API_URL = 'http://localhost:9000'
+      
+      export async function getServerSideProps() {
+        const res = await fetch(`${API_URL}/api/data`)
+        const data = await res.json()
+        return { props: { data } }
+      }
+      ```
+
+      ```javascript Vue
+      // curl https://localhost:9000 (old)
+      const API_URL = 'http://localhost:9000'
+      
+      axios.get(`${API_URL}/api/items`)
+        .then(response => {
+          this.items = response.data
+        })
+      ```
+
+      ```javascript Angular
+      // curl https://localhost:9000 (old)
+      private apiUrl = 'http://localhost:9000';
+      
+      getProducts(): Observable<Product[]> {
+        return this.http.get<Product[]>(`${this.apiUrl}/api/products`);
+      }
+      ```
+
+      ```javascript Vite
+      // vite.config.js
+      // curl https://localhost:9000 (old)
+      export default {
+        server: {
+          proxy: {
+            '/api': 'http://localhost:9000'
+          }
+        }
+      }
+      ```
+
+      ```javascript Webpack
+      // webpack.config.js
+      // curl https://localhost:9000 (old)
+      module.exports = {
+        devServer: {
+          proxy: {
+            '/api': 'http://localhost:9000'
+          }
+        }
+      }
+      ```
+    </CodeGroup>
   </Step>
 
   <Step title="Watch">
