@@ -8,37 +8,37 @@ icon: "apple"
 Subtrace has experimental support for developers on macOS.
 
 <Steps>
-  <Step title="Start backend">
+  <Step title="Start your app">
     Let's say your server is running on port 8000:
 
-    ```
-    $ yarn run dev
-    [my-app] http server started on localhost:8000
+    ```bash
+    # start your app on localhost:8000
+    yarn run dev
     ```
   </Step>
 
-  <Step title="Download Subtrace">
-    In a second terminal window, download and start Subtrace:
+  <Step title="Start Subtrace">
+    In a second terminal window, install Subtrace and start the proxy:
 
-    ```
-    $ curl -fsSL https://subtrace.dev/install.sh | sh
-    $ subtrace proxy 9000:8000
-    ```
+    ```bash
+    curl -fsSL https://subtrace.dev/install.sh | sh
 
-    This will start a server on port 9000.
-  </Step>
-
-  <Step title="Run proxy">
-    When you need to send request to your backend server, send it to
-    localhost:9000 instead and it will be automatically proxied.
-
-    ```
-    $ curl https://localhost:9000/api/my-app/users/foo
+    # start subtrace on localhost:9000
+    subtrace proxy 9000:8000
     ```
 
     <Expandable title="example output">
       <img className="rounded-xl" src="/images/macos-link.png" />
     </Expandable>
+  </Step>
+
+  <Step title="Run proxy">
+    Send requests to localhost:9000 instead to proxy them via Subtrace.
+
+    ```bash
+    # change your frontend build to use localhost:9000 as the backend server endpoint
+    curl https://localhost:9000
+    ```
   </Step>
 
   <Step title="Watch">
