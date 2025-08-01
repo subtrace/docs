@@ -8,13 +8,26 @@ icon: "apple"
 Subtrace has experimental support for developers on macOS.
 
 <Steps>
-  <Step title="Start your app">
-    Let's say your server is running on port 8000:
+  <Step title="Start backend">
+    Start your backend server on port 8000:
 
-    ```bash
-    # start your app on localhost:8000
-    yarn run dev
-    ```
+    <CodeGroup>
+      ```bash Node.js
+      npm run dev
+      ```
+
+      ```bash Python
+      python main.py
+      ```
+
+      ```bash Go
+      go run .
+      ```
+
+      ```bash Ruby
+      rails server -p 8000
+      ```
+    </CodeGroup>
   </Step>
 
   <Step title="Start Subtrace">
@@ -23,7 +36,7 @@ Subtrace has experimental support for developers on macOS.
     ```bash
     curl -fsSL https://subtrace.dev/install.sh | sh
 
-    # start subtrace on localhost:9000
+    # starts listening on 9000 and proxies requests to 8000
     subtrace proxy 9000:8000
     ```
 
@@ -32,8 +45,8 @@ Subtrace has experimental support for developers on macOS.
     </Expandable>
   </Step>
 
-  <Step title="Run proxy">
-    Update your frontend to use localhost:9000 as the backend endpoint:
+  <Step title="Update frontend">
+    Configure your frontend to send all backend requests to localhost:9000 instead:
 
     <CodeGroup>
       ```javascript React
@@ -101,7 +114,7 @@ Subtrace has experimental support for developers on macOS.
     </CodeGroup>
   </Step>
 
-  <Step title="Watch">
+  <Step title="See requests">
     Open the `subt.link` URL in your browser to watch every request happening
     in realtime:
 
