@@ -37,8 +37,8 @@ Subtrace has experimental support for developers on macOS.
 
     <CodeGroup>
       ```javascript React
-      // curl https://localhost:9000 (old)
-      const API_URL = 'http://localhost:9000'
+      const API_URL = 'http://localhost:8000' // [!code --]
+      const API_URL = 'http://localhost:9000' // [!code ++]
       
       fetch(`${API_URL}/api/users`)
         .then(res => res.json())
@@ -46,8 +46,8 @@ Subtrace has experimental support for developers on macOS.
       ```
 
       ```javascript Next.js
-      // curl https://localhost:9000 (old)
-      const API_URL = 'http://localhost:9000'
+      const API_URL = 'http://localhost:8000' // [!code --]
+      const API_URL = 'http://localhost:9000' // [!code ++]
       
       export async function getServerSideProps() {
         const res = await fetch(`${API_URL}/api/data`)
@@ -57,8 +57,8 @@ Subtrace has experimental support for developers on macOS.
       ```
 
       ```javascript Vue
-      // curl https://localhost:9000 (old)
-      const API_URL = 'http://localhost:9000'
+      const API_URL = 'http://localhost:8000' // [!code --]
+      const API_URL = 'http://localhost:9000' // [!code ++]
       
       axios.get(`${API_URL}/api/items`)
         .then(response => {
@@ -67,8 +67,8 @@ Subtrace has experimental support for developers on macOS.
       ```
 
       ```javascript Angular
-      // curl https://localhost:9000 (old)
-      private apiUrl = 'http://localhost:9000';
+      private apiUrl = 'http://localhost:8000'; // [!code --]
+      private apiUrl = 'http://localhost:9000'; // [!code ++]
       
       getProducts(): Observable<Product[]> {
         return this.http.get<Product[]>(`${this.apiUrl}/api/products`);
@@ -77,11 +77,11 @@ Subtrace has experimental support for developers on macOS.
 
       ```javascript Vite
       // vite.config.js
-      // curl https://localhost:9000 (old)
       export default {
         server: {
           proxy: {
-            '/api': 'http://localhost:9000'
+            '/api': 'http://localhost:8000' // [!code --]
+            '/api': 'http://localhost:9000' // [!code ++]
           }
         }
       }
@@ -89,11 +89,11 @@ Subtrace has experimental support for developers on macOS.
 
       ```javascript Webpack
       // webpack.config.js
-      // curl https://localhost:9000 (old)
       module.exports = {
         devServer: {
           proxy: {
-            '/api': 'http://localhost:9000'
+            '/api': 'http://localhost:8000' // [!code --]
+            '/api': 'http://localhost:9000' // [!code ++]
           }
         }
       }
