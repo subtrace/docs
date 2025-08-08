@@ -28,6 +28,7 @@
               "docker-compose",
               "kubernetes",
               "ecs",
+              "eks",
               "fly-io",
               "porter"
             ]
