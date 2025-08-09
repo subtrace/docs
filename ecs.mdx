@@ -8,36 +8,7 @@ icon: "aws"
 If you deploy your application on AWS Elastic Container Service (ECS), Subtrace
 is the easiest way to monitor the network activity in your cluster in realtime.
 
-<Note>
-Subtrace requires a Linux kernel of 5.14 or newer, so you’ll have to use the
-[EC2 launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters_ec2.html)
-for your ECS tasks. The
-[Fargate launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html)
-is still on kernel 5.10 as of May 2025 and is not compatible with Subtrace.
-
-<Accordion title="How do I create an ECS cluster with EC2 launch type?">
-1. Open **ECS** → **Clusters** → **Create cluster**
-   ![Click create cluster](/images/ecs/0-cluster-create-click.png)
-
-2. Give the cluster a name. Anything alphanumeric + hyphens works.
-   ![Enter cluster name](/images/ecs/1-cluster-name.png)
-
-3. In the **Infrastructure** panel, uncheck **Fargate** and check **Amazon EC2 instances**.
-   ![Select EC2 + ASG](/images/ecs/2-cluster-asg.png)
-
-4. Leave **Create new ASG** selected. ECS will automatically spin up an auto-scaling group so your tasks run on instances that register themselves with the cluster.
-
-5. Choose **Amazon Linux 2023** as the AMI. It ships with Linux kernel version 6.1, which comfortably satisfies Subtrace's 5.14+ requirement.
-   ![Choose Amazon Linux 2023 AMI](/images/ecs/3-cluster-ami.png)
-
-6. Pick any instance type and a minimum/maximum instance limit for the auto-scaling group. You can change this later.
-   ![Set desired capacity](/images/ecs/4-cluster-capacity.png)
-
-7. Scroll to the bottom and click **Create**. ECS will provision the ASG, launch EC2 instances, install the ECs agent, auto‑register them with the new cluster and give you a cluster that's compatible with EC2 launch type tasks.
-</Accordion>
-</Note>
-
-### Updating your task to support Subtrace
+### Updating your ECS task to support Subtrace
 
 1. Open **ECS** → **Task definitions**, go to your task and click **Create new revision with JSON**.
    ![open JSON](/images/ecs/5-task-update-button.png)
@@ -63,6 +34,10 @@ is still on kernel 5.10 as of May 2025 and is not compatible with Subtrace.
      ```json
      "environment": [
        {
+         "name": "SUBTRACE_ANCIENT_KERNEL",
+         "value": "1"
+       },
+       {
          "name": "SUBTRACE_TOKEN",
          "value": "subt_****************"
        }
@@ -74,6 +49,27 @@ is still on kernel 5.10 as of May 2025 and is not compatible with Subtrace.
      ![highlighted task JSON diff](/images/ecs/6-task-json-diff.png)
 
 3. Click **Create** to create a new task revision.
+
+<Tip>
+Subtrace recommends using a Linux kernel of 5.14 or newer, which requires the
+[EC2 launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters_ec2.html)
+for your tasks. The
+[Fargate launch type](https://docs.aws.amazon.com/AmazonECS/latest/developerguide/task_definition_parameters.html),
+which is the default, is still on kernel 5.10 as of May 2025.
+
+Set the `SUBTRACE_ANCIENT_KERNEL=1` environment variable in your task
+definition to use Subtrace if your cluster is based on the Fargate launch type
+by modifying your task with the web interface or by editing the task JSON:
+
+     ```json
+     "environment": [
+       {
+         "name": "SUBTRACE_ANCIENT_KERNEL",
+         "value": "1"
+       }
+     ]
+     ```
+</Tip>
 
 ---
 
