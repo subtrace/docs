@@ -29,6 +29,7 @@
               "kubernetes",
               "ecs",
               "eks",
+              "vercel-next",
               "fly-io",
               "porter"
             ]
